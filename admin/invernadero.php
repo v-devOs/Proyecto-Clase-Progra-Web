@@ -8,13 +8,13 @@ $accion = isset($_GET['accion'])
   : null;
 
 switch ($accion) {
-  case 'create':
+  case 'crear':
     
     break;
-  case 'update':
+  case 'actualizar':
 
     break;
-  case 'delete':
+  case 'eliminar':
     
     break;
   default:
