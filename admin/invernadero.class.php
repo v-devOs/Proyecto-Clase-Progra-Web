@@ -32,8 +32,15 @@ class Invenadero extends Sistema{
   }
 
   function delete( $id ) {
+    $this -> connection();
 
-    return $result = [];
+    $sql = " DELETE FROM invernadero where id_invernadero = :id_invernadero ";
+    $stmt = $this -> con -> prepare( $sql );
+    $stmt -> bindParam(":id_invernadero", $id, PDO::PARAM_INT);
+    $stmt -> execute();
+    $result = $stmt -> rowCount();
+
+    return $result;
   }
 
   function readOne( $id ) {
