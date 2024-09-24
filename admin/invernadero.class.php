@@ -6,8 +6,23 @@ class Invenadero extends Sistema{
 
   function create( $data ) {
 
+    $this -> connection();
 
-    return $result = [];
+    $sql = 
+      "INSERT INTO invernadero(invernadero, longitud, latitud, area,  fecha_creacion) 
+        VALUES (:invernadero, :longitud, :latitud, :area , :fecha_creacion)";
+    $stmt = $this -> con -> prepare( $sql );
+
+    $stmt -> bindParam(':invernadero', $data['invernadero'], PDO::PARAM_STR);
+    $stmt -> bindParam(':longitud', $data['longitud'], PDO::PARAM_STR);
+    $stmt -> bindParam(':latitud', $data['latitud'], PDO::PARAM_STR);
+    $stmt -> bindParam(':area',$data['area'], PDO::PARAM_INT);
+    $stmt -> bindParam(':fecha_creacion', $data['fecha_creacion'], PDO::PARAM_STR);
+    $stmt -> execute();
+
+    $result = $stmt -> rowCount();
+
+    return $result;
   }
 
   function update( $id, $data ) {

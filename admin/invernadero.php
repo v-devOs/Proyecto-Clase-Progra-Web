@@ -12,12 +12,23 @@ switch ($accion) {
     include("views/invernadero/crear.php");
     break;
   case 'nuevo':
-    print_r($_GET);
+    $data = $_POST['data'];
+    $result = $app -> create($data);
+
+    if($result == 1){
+      $mensaje = 'El invernadero se agrego correctamente';
+      $tipo = "success";
+    }else{
+      $mensaje = "Ocurrio al intentar agregar el invernadero";
+      $tipo = "danger";
+    }
+
+    $invernaderos = $app -> readAll(); // Read
+    include("views/invernadero/index.php");
+    
     break;
   case 'actualizar':
-    $data = $_POST['data'];
-    $app -> create($data);
-    print_r($data['invernadero']);
+    
     break;
   case 'eliminar':
     
