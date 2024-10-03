@@ -7,8 +7,8 @@ $accion = isset($_GET['accion'])
   ? $_GET['accion'] 
   : null;
 
-$id = isset($_GET['accion']) 
-  ? $_GET['accion'] 
+$id = isset($_GET['id']) 
+  ? $_GET['id'] 
   : null;
 
 switch ($accion) {
@@ -32,7 +32,7 @@ switch ($accion) {
     
     break;
   case 'actualizar':
-    $invernaderos = $app -> readOne($id);
+    $invernadero = $app -> readOne($id);
     include('views/invernadero/crear.php');
     break;
   case 'modificar':
@@ -49,7 +49,7 @@ switch ($accion) {
     }
     $invernaderos = $app -> readAll(); // Read
     include("views/invernadero/index.php");
-    
+
     break;
   case 'eliminar':
     $id = (isset($_GET['id'])) ? $_GET['id'] : null;

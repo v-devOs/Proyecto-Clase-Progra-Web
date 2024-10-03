@@ -30,7 +30,7 @@ class Invenadero extends Sistema{
 
     $sql = "UPDATE invernadero set invernadero=:invernadero,
         latitud=:latitud, longitud=:longitud, area=:area, fecha_creacion=:fecha_creacion where
-        id_invernadero=:id_invernadero;";
+        id_invernadero=:id_invernadero";
     
     $stmt = $this -> con -> prepare( $sql );
     $stmt->bindParam(':id_invernadero',$id,PDO::PARAM_INT);
@@ -59,6 +59,7 @@ class Invenadero extends Sistema{
 
   function readOne( $id ) {
     $this -> connection();
+    $result = [];
 
     $consulta = 'SELECT * FROM invernadero where id_invernadero=:id_invernadero;';
     $sql = $this->con->prepare($consulta);
