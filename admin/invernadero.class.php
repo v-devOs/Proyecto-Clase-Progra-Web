@@ -26,9 +26,23 @@ class Invenadero extends Sistema{
   }
 
   function update( $id, $data ) {
+    $this -> connection();
 
+    $sql = "UPDATE invernadero set invernadero=:invernadero,
+        latitud=:latitud, longitud=:longitud, area=:area, fecha_creacion=:fecha_creacion where
+        id_invernadero=:id_invernadero;";
+    
+    $stmt = $this -> con -> prepare( $sql );
+    $stmt->bindParam(':id_invernadero',$id,PDO::PARAM_INT);
+    $stmt->bindParam(':invernadero',$data['invernadero'],PDO::PARAM_STR);
+    $stmt->bindParam(':latitud',$data['latitud'],PDO::PARAM_STR);
+    $stmt->bindParam(':longitud',$data['longitud'],PDO::PARAM_STR);
+    $stmt->bindParam(':area',$data['area'],PDO::PARAM_INT);
+    $stmt->bindParam(':fecha_creacion',$data['fecha_creacion'],PDO::PARAM_STR);
+    $stmt->execute();
 
-    return $result = [];
+    $result = $stmt -> rowCount();
+    return $result;
   }
 
   function delete( $id ) {
@@ -44,7 +58,15 @@ class Invenadero extends Sistema{
   }
 
   function readOne( $id ) {
-    return $result = [];
+    $this -> connection();
+
+    $consulta = 'SELECT * FROM invernadero where id_invernadero=:id_invernadero;';
+    $sql = $this->con->prepare($consulta);
+    $sql->bindParam(":id_invernadero", $id, PDO::PARAM_INT);
+    $sql -> execute();
+    $result = $sql->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
   }
 
   function readAll() {
