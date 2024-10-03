@@ -80,5 +80,4 @@ class Invenadero extends Sistema{
 
     return $result;
   }
-
 }

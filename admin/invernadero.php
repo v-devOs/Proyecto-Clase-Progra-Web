@@ -7,6 +7,10 @@ $accion = isset($_GET['accion'])
   ? $_GET['accion'] 
   : null;
 
+$id = isset($_GET['accion']) 
+  ? $_GET['accion'] 
+  : null;
+
 switch ($accion) {
   case 'crear':
     include("views/invernadero/crear.php");
@@ -28,6 +32,23 @@ switch ($accion) {
     
     break;
   case 'actualizar':
+    $invernaderos = $app -> readOne($id);
+    include('views/invernadero/crear.php');
+    break;
+  case 'modificar':
+    $data = $_POST['data'];
+    $result = $app -> update($id, $data);
+
+    if($result){
+      $mensaje = 'Invernadero se actualizo correctamente';
+      $tipo = 'success';
+    }
+    else{
+      $mensaje = 'El invernadero no se actualizo';
+      $tipo = 'danger';
+    }
+    $invernaderos = $app -> readAll(); // Read
+    include("views/invernadero/index.php");
     
     break;
   case 'eliminar':
