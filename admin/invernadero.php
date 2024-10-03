@@ -32,7 +32,7 @@ switch ($accion) {
     
     break;
   case 'actualizar':
-    $invernadero = $app -> readOne($id);
+    $invernaderos = $app -> readOne($id);
     include('views/invernadero/crear.php');
     break;
   case 'modificar':
