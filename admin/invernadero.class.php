@@ -1,6 +1,6 @@
 <?php
 
-include("../sistema.class.php");
+require_once("../sistema.class.php");
 
 class Invenadero extends Sistema{
 

@@ -1,6 +1,6 @@
 <?php
 
-include("./invernadero.class.php");
+require_once("./invernadero.class.php");
 $app = new Invenadero;
 
 $accion = isset($_GET['accion'])

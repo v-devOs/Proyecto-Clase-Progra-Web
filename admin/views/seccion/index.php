@@ -10,7 +10,7 @@
       <th scope="col">Nombre</th>
       <th scope="col">Area</th>
       <th scope="col">Longitud</th>
-      <th scope="col">Id Invernadero</th>
+      <th scope="col">Invernadero</th>
       <th scope="col">Opciones</th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
         <td><?php echo $seccion['seccion'] ?></td>
         <td><?php echo $seccion['area'] ?></td>
         <td><?php echo $seccion['longitud'] ?></td>
-        <td><?php echo $seccion['id_invernadero'] ?></td>
+        <td><?php echo $seccion['invernadero'] ?></td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic radio toggle button">
             <a href="seccion.php?accion=actualizar&id=<?php echo $seccion['id_seccion'] ?>" class="btn btn-warning">Actualizar</a>

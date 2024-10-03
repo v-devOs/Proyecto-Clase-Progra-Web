@@ -1,7 +1,9 @@
 <?php
 
-include("./seccion.class.php");
+require_once("./seccion.class.php");
+require_once("./invernadero.class.php");
 $app = new Seccion;
+$appInvernadero = new Invenadero;
 
 $accion = isset($_GET['accion'])
   ? $_GET['accion'] 
@@ -11,8 +13,11 @@ $id = isset($_GET['id'])
   ? $_GET['id'] 
   : null;
 
+
+
 switch ($accion) {
   case 'crear':
+    $invernaderos = $appInvernadero -> readAll();
     include("views/seccion/crear.php");
     break;
   case 'nuevo':
@@ -32,6 +37,7 @@ switch ($accion) {
     
     break;
   case 'actualizar':
+    $invernaderos = $appInvernadero -> readAll();
     $secciones = $app -> readOne($id);
     include('views/seccion/crear.php');
     break;

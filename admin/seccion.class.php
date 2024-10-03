@@ -1,6 +1,6 @@
 <?php
 
-include("../sistema.class.php");
+require_once("../sistema.class.php");
 
 class Seccion extends Sistema{
 
@@ -70,7 +70,8 @@ class Seccion extends Sistema{
 
   function readAll() {
     $this -> connection();
-    $consulta = 'SELECT * FROM seccion';
+    $consulta = 'SELECT s.*, i.invernadero FROM seccion s 
+      JOIN invernadero i ON s.id_invernadero = i.id_invernadero';
 
     $sql = $this -> con -> prepare ($consulta);
     $sql -> execute();

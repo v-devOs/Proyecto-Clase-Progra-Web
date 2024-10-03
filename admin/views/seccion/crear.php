@@ -20,10 +20,27 @@
                 <input class="form-control" type="text" name="data[longitud]" placeholder="Escribe aqui la Longitud" id="longitud" value="<?php
                 if(isset($secciones['longitud'])):echo($secciones['longitud']);endif; ?>"/>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="id_invernadero" class="form-label">Id del invernadero</label>
                 <input class="form-control" type="number" name="data[id_invernadero]" placeholder="Escribe aqui el id del invernadero" id="id_invernadero" value="<?php
                 if(isset($secciones['area'])):echo($secciones['id_invernadero']);endif; ?>"/>
+            </div> -->
+
+            <div class="mb-3">
+                <label for="" class="form-label">Invernadero</label>
+                <select class="form-select" name="data[id_invernadero]" id="">
+                    <?php foreach($invernaderos as $invernadero): ?>
+                    <?php 
+                        $selected = "";
+                        
+                        if($secciones['id_invernadero'] == $invernadero['id_invernadero'])
+                            $selected = "selected";
+                    ?>
+                        <option value="<?php echo $invernadero['id_invernadero'];?>" <?php echo $selected ?>>
+                            <?php echo $invernadero['invernadero'];?>
+                        </option>
+                    <?php endforeach ?>
+                </select>
             </div>
             <div class="mb-3">
                 <input class="btn btn-success" type="submit" name="data[enviar]" value="Guardar"/>
