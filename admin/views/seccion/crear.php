@@ -20,12 +20,6 @@
                 <input class="form-control" type="text" name="data[longitud]" placeholder="Escribe aqui la Longitud" id="longitud" value="<?php
                 if(isset($secciones['longitud'])):echo($secciones['longitud']);endif; ?>"/>
             </div>
-            <!-- <div class="mb-3">
-                <label for="id_invernadero" class="form-label">Id del invernadero</label>
-                <input class="form-control" type="number" name="data[id_invernadero]" placeholder="Escribe aqui el id del invernadero" id="id_invernadero" value="<?php
-                if(isset($secciones['area'])):echo($secciones['id_invernadero']);endif; ?>"/>
-            </div> -->
-
             <div class="mb-3">
                 <label for="" class="form-label">Invernadero</label>
                 <select class="form-select" name="data[id_invernadero]" id="">
