@@ -3,7 +3,7 @@
 require_once("./invernadero.class.php");
 $app = new Invenadero;
 
-$app -> checkRol('AdministradorX');
+$app -> checkRol('Administrador');
 
 $accion = isset($_GET['accion'])
   ? $_GET['accion'] 
