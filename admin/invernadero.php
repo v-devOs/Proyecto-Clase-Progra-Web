@@ -1,81 +1,63 @@
 <?php
-
-require_once("./invernadero.class.php");
-$app = new Invenadero;
-
+require_once ('invernadero.class.php');
+$app = new Invernadero;
 $app -> checkRol('Administrador');
-
-$accion = isset($_GET['accion'])
-  ? $_GET['accion'] 
-  : null;
-
-$id = isset($_GET['id']) 
-  ? $_GET['id'] 
-  : null;
-
-switch ($accion) {
-  case 'crear':
-    include("views/invernadero/crear.php");
-    break;
-  case 'nuevo':
-    $data = $_POST['data'];
-    $result = $app -> create($data);
-
-    if($result == 1){
-      $mensaje = 'El invernadero se agrego correctamente';
-      $tipo = "success";
-    }else{
-      $mensaje = "Ocurrio al intentar agregar el invernadero";
-      $tipo = "danger";
-    }
-
-    $invernaderos = $app -> readAll(); // Read
-    include("views/invernadero/index.php");
-    
-    break;
-  case 'actualizar':
-    $invernaderos = $app -> readOne($id);
-    include('views/invernadero/crear.php');
-    break;
-  case 'modificar':
-    $data = $_POST['data'];
-    $result = $app -> update($id, $data);
-
-    if($result){
-      $mensaje = 'Invernadero se actualizo correctamente';
-      $tipo = 'success';
-    }
-    else{
-      $mensaje = 'El invernadero no se actualizo';
-      $tipo = 'danger';
-    }
-    $invernaderos = $app -> readAll(); // Read
-    include("views/invernadero/index.php");
-
-    break;
-  case 'eliminar':
-    $id = (isset($_GET['id'])) ? $_GET['id'] : null;
-
-    if( !is_null($id) ){
-      if(is_numeric($id)){
-        $result = $app -> delete($id);
-
-        if($result == 1){
-          $mensaje = "El invernadero se elimino correctament";
-          $tipo = "success";
+$accion = (isset($_GET['accion']))?$_GET['accion']:null;
+$id=(isset($_GET['id']))?$_GET['id']:null;
+switch($accion){
+    case 'crear':
+        include 'views/invernadero/crear.php';
+        break;
+    case 'nuevo':
+        $data=$_POST['data'];
+        $resultado= $app->create($data);
+        if($resultado){
+            $mensaje="El invernadero se agrego correctamente";
+            $tipo="success";
         }else{
-          $mensaje = "Error al eliminar el invernadero";
-          $tipo = "danger";
+            $mensaje="Ocurrio un error al agregar el invernadero";
+            $tipo="danger";
         }
-      }
-    }
+        $invernaderos = $app->readAll();
+        include('views/invernadero/index.php');
+        break;
+    case 'actualizar':
+        $invernaderos=$app->readOne($id);
+        include('views/invernadero/crear.php');
+        break;
 
-    $invernaderos = $app -> readAll(); // Read
-    include("views/invernadero/index.php");
-
-    break;
-  default:
-    $invernaderos = $app -> readAll(); // Read
-    include("views/invernadero/index.php");
-    break;
+    case 'modificar':
+        $data= $_POST['data'];
+        $resultado = $app->update($id,$data);
+        if($resultado){
+            $mensaje="El invernadero se modificó correctamente";
+            $tipo="success";
+        } else {
+            $mensaje="Ocurrió un error al modificar el invernadero";
+            $tipo="danger";
+        }
+        $invernaderos = $app->readAll();
+        include('views/invernadero/index.php');
+        break;
+    case 'eliminar':
+        if(!is_null($id)){
+            if(is_numeric($id)){
+                $resultado=$app->delete($id);
+                if($resultado){
+                    $mensaje="Se elimino exitosamente el invernadero";
+                    $tipo="success";
+                }else{
+                    $mensaje="Hubo un problema con la eliminacion";
+                    $tipo="danger";
+                }
+            }
+        }
+        $invernaderos = $app->readAll();
+        include 'views/invernadero/index.php';
+        break;
+    default:
+        $invernaderos = $app->readAll();
+        include 'views/invernadero/index.php';
 }
+require_once('views/footer.php')
+?>

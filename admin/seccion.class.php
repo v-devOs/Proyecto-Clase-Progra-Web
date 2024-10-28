@@ -1,83 +1,67 @@
 <?php
+require_once ('../sistema.class.php');
 
-require_once("../sistema.class.php");
+class seccion extends sistema {
+    function create($data) {
+        $result = [];
+        $this->conexion();
+        $sql = "INSERT INTO seccion(area, seccion, id_invernadero) 
+                VALUES(:area, :seccion, :id_invernadero);";  // Eliminé :longitud ya que no se está utilizando
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':area', $data['area'], PDO::PARAM_INT);
+        $modificar->bindParam(':seccion', $data['seccion'], PDO::PARAM_STR);
+        $modificar->bindParam(':id_invernadero', $data['id_invernadero'], PDO::PARAM_INT);
+        
+        $modificar->execute();
+        $result = $modificar->rowCount();
+        return $result;
+    }    
 
-class Seccion extends Sistema{
+    public function update($id, $data) {
+        $this->conexion();
+        $sql = "UPDATE seccion SET seccion = :seccion, area = :area, id_invernadero = :id_invernadero WHERE id_seccion = :id_seccion";
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':seccion', $data['seccion'], PDO::PARAM_STR);
+        $modificar->bindParam(':area', $data['area'], PDO::PARAM_INT);
+        $modificar->bindParam(':id_seccion', $id, PDO::PARAM_INT);
+        $modificar->bindParam(':id_invernadero', $data['id_invernadero'], PDO::PARAM_INT);
+        return $modificar->execute();
+    }    
 
-  function create( $data ) {
+    function delete ($id) {
+        $result = [];
+        $this->conexion();
+        if(is_numeric($id)){
+            $sql="delete from seccion where id_seccion=:id_seccion";
+            $borrar=$this->con->prepare($sql);
+            $borrar->bindParam(':id_seccion',$id,PDO::PARAM_INT);
+            $borrar->execute();
+            $result = $borrar->rowCount();
+        }
+        return $result;
+    }
 
-    $this -> connection();
+    function readOne($id) {
+        $this->conexion();
+        $result = [];
+        $consulta = 'SELECT * FROM seccion WHERE id_seccion = :id_seccion';
+        $sql = $this->con->prepare($consulta);
+        $sql->bindParam(':id_seccion', $id, PDO::PARAM_INT);
+        $sql->execute();
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }    
 
-    $sql = 
-      "INSERT INTO seccion(area, id_invernadero, longitud, seccion ) 
-        VALUES (:area, :id_invernadero, :longitud, :seccion)";
-    $stmt = $this -> con -> prepare( $sql );
+    function readAll(){
+        $this->conexion();
+        $result = [];
+        $consulta = 'SELECT s.*, i.invernadero FROM seccion s join invernadero i on s.id_invernadero=i.id_invernadero';
+        $sql = $this->con->prepare($consulta);
+        $sql -> execute();
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
-    $stmt -> bindParam(':seccion', $data['seccion'], PDO::PARAM_STR);
-    $stmt -> bindParam(':area', $data['area'], PDO::PARAM_INT);
-    $stmt -> bindParam(':longitud', $data['longitud'], PDO::PARAM_STR);
-    $stmt -> bindParam(':id_invernadero', $data['id_invernadero'], PDO::PARAM_INT);
-    $stmt -> execute();
 
-    $result = $stmt -> rowCount();
-
-    return $result;
-  }
-
-  function update( $id, $data ) {
-    $this -> connection();
-
-    $sql = "UPDATE seccion set seccion=:seccion,
-        area=:area, longitud=:longitud, id_invernadero = :id_invernadero where
-        id_seccion=:id_seccion";
-    
-    $stmt = $this -> con -> prepare( $sql );
-    $stmt->bindParam(':seccion',$data['seccion'],PDO::PARAM_STR);
-    $stmt->bindParam(':area',$data['area'],PDO::PARAM_INT);
-    $stmt->bindParam(':longitud',$data['longitud'],PDO::PARAM_STR);
-    $stmt->bindParam(':id_invernadero',$data['id_invernadero'],PDO::PARAM_INT);
-    $stmt->bindParam(':id_seccion',$id,PDO::PARAM_INT);
-    $stmt->execute();
-
-    $result = $stmt -> rowCount();
-    return $result;
-  }
-
-  function delete( $id ) {
-    $this -> connection();
-
-    $sql = " DELETE FROM seccion where id_seccion = :id_seccion ";
-    $stmt = $this -> con -> prepare( $sql );
-    $stmt -> bindParam(":id_seccion", $id, PDO::PARAM_INT);
-    $stmt -> execute();
-    $result = $stmt -> rowCount();
-
-    return $result;
-  }
-
-  function readOne( $id ) {
-    $this -> connection();
-    $result = [];
-
-    $consulta = 'SELECT * FROM seccion where id_seccion=:id_seccion;';
-    $sql = $this->con->prepare($consulta);
-    $sql->bindParam(":id_seccion", $id, PDO::PARAM_INT);
-    $sql -> execute();
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
-
-    return $result;
-  }
-
-  function readAll() {
-    $this -> connection();
-    $consulta = 'SELECT s.*, i.invernadero FROM seccion s 
-      JOIN invernadero i ON s.id_invernadero = i.id_invernadero';
-
-    $sql = $this -> con -> prepare ($consulta);
-    $sql -> execute();
-
-    $result = $sql -> fetchAll(PDO::FETCH_ASSOC);
-
-    return $result;
-  }
 }
+?>
